@@ -4,14 +4,14 @@
 
 	'use strict';
 
-	var STORAGE_KEY = 'todos-vuejs';
+	var STORAGE_KEY = 'books-vuejs';
 
-	exports.todoStorage = {
+	exports.bookStorage = {
 		fetch: function () {
 			return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 		},
-		save: function (todos) {
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+		save: function (books) {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
 		}
 	};
 

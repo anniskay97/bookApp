@@ -1,21 +1,21 @@
-/*global Vue, todoStorage */
+/*global Vue, bookStorage */
 
 (function (exports) {
 
 	'use strict';
 
 	var filters = {
-		all: function (todos) {
-			return todos;
+		all: function (books) {
+			return books;
 		},
-		active: function (todos) {
-			return todos.filter(function (todo) {
-				return !todo.completed;
+		active: function (books) {
+			return books.filter(function (book) {
+				return !book.completed;
 			});
 		},
-		completed: function (todos) {
-			return todos.filter(function (todo) {
-				return todo.completed;
+		completed: function (books) {
+			return books.filter(function (book) {
+				return book.completed;
 			});
 		}
 	};
@@ -23,40 +23,40 @@
 	exports.app = new Vue({
 
 		// the root element that will be compiled
-		el: '.todoapp',
+		el: '.bookapp',
 
 		// app initial state
 		data: {
-			todos: todoStorage.fetch(),
-			newTodo: '',
-			editedTodo: null,
+			books: bookStorage.fetch(),
+			newbook: '',
+			editedbook: null,
 			visibility: 'all'
 		},
 
-		// watch todos change for localStorage persistence
+		// watch books change for localStorage persistence
 		watch: {
-			todos: {
+			books: {
 				deep: true,
-				handler: todoStorage.save
+				handler: bookStorage.save
 			}
 		},
 
 		// computed properties
 		// http://vuejs.org/guide/computed.html
 		computed: {
-			filteredTodos: function () {
-				return filters[this.visibility](this.todos);
+			filteredbooks: function () {
+				return filters[this.visibility](this.books);
 			},
 			remaining: function () {
-				return filters.active(this.todos).length;
+				return filters.active(this.books).length;
 			},
 			allDone: {
 				get: function () {
 					return this.remaining === 0;
 				},
 				set: function (value) {
-					this.todos.forEach(function (todo) {
-						todo.completed = value;
+					this.books.forEach(function (book) {
+						book.completed = value;
 					});
 				}
 			}
@@ -70,43 +70,43 @@
 				return word + (count === 1 ? '' : 's');
 			},
 
-			addTodo: function () {
-				var value = this.newTodo && this.newTodo.trim();
+			addbook: function () {
+				var value = this.newbook && this.newbook.trim();
 				if (!value) {
 					return;
 				}
-				this.todos.push({ id: this.todos.length + 1, title: value, completed: false });
-				this.newTodo = '';
+				this.books.push({ id: this.books.length + 1, title: value, completed: false });
+				this.newbook = '';
 			},
 
-			removeTodo: function (todo) {
-				var index = this.todos.indexOf(todo);
-				this.todos.splice(index, 1);
+			removebook: function (book) {
+				var index = this.books.indexOf(book);
+				this.books.splice(index, 1);
 			},
 
-			editTodo: function (todo) {
-				this.beforeEditCache = todo.title;
-				this.editedTodo = todo;
+			editbook: function (book) {
+				this.beforeEditCache = book.title;
+				this.editedbook = book;
 			},
 
-			doneEdit: function (todo) {
-				if (!this.editedTodo) {
+			doneEdit: function (book) {
+				if (!this.editedbook) {
 					return;
 				}
-				this.editedTodo = null;
-				todo.title = todo.title.trim();
-				if (!todo.title) {
-					this.removeTodo(todo);
+				this.editedbook = null;
+				book.title = book.title.trim();
+				if (!book.title) {
+					this.removebook(book);
 				}
 			},
 
-			cancelEdit: function (todo) {
-				this.editedTodo = null;
-				todo.title = this.beforeEditCache;
+			cancelEdit: function (book) {
+				this.editedbook = null;
+				book.title = this.beforeEditCache;
 			},
 
 			removeCompleted: function () {
-				this.todos = filters.active(this.todos);
+				this.books = filters.active(this.books);
 			}
 		},
 
@@ -114,7 +114,7 @@
 		// before focusing on the input field.
 		// http://vuejs.org/guide/custom-directive.html
 		directives: {
-			'todo-focus': function (el, binding) {
+			'book-focus': function (el, binding) {
 				if (binding.value) {
 					el.focus();
 				}

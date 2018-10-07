@@ -2,33 +2,33 @@
 <html data-framework="vue">
 	<head>
 		<meta charset="utf-8">
-		<title>Vue.js • TodoMVC</title>
-		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
-		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<title>Vue.js • bookMVC</title>
+		<link rel="stylesheet" href="node_modules/bookmvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/bookmvc-app-css/index.css">
 		<style> [v-cloak] { display: none; } </style>
 	</head>
 	<body>
-		<section class="todoapp" v-cloak>
+		<section class="bookapp" v-cloak>
 			<header class="header">
-				<h1>todos</h1>
-				<input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
+				<h1>BookApp</h1>
+				<input class="new-book" autofocus autocomplete="off" placeholder="Какую книгу Вы прочли?" v-model="newbook" @keyup.enter="addbook">
 			</header>
-			<section class="main" v-show="todos.length">
+			<section class="main" v-show="books.length">
 				<input id="toggle-all" class="toggle-all" type="checkbox" v-model="allDone">
 				<label for="toggle-all">Mark all as complete</label>
-				<ul class="todo-list">
-					<li class="todo" v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo == editedTodo}">
+				<ul class="book-list">
+					<li class="book" v-for="book in filteredbooks" :key="book.id" :class="{completed: book.completed, editing: book == editedbook}">
 						<div class="view">
-							<input class="toggle" type="checkbox" v-model="todo.completed">
-							<label @dblclick="editTodo(todo)">{{todo.title}}</label>
-							<button class="destroy" @click="removeTodo(todo)"></button>
+							<input class="toggle" type="checkbox" v-model="book.completed">
+							<label @dblclick="editbook(book)">{{book.title}}</label>
+							<button class="destroy" @click="removebook(book)"></button>
 						</div>
-						<input class="edit" type="text" v-model="todo.title" v-todo-focus="todo == editedTodo" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
+						<input class="edit" type="text" v-model="book.title" v-book-focus="book == editedbook" @blur="doneEdit(book)" @keyup.enter="doneEdit(book)" @keyup.esc="cancelEdit(book)">
 					</li>
 				</ul>
 			</section>
-			<footer class="footer" v-show="todos.length">
-				<span class="todo-count">
+			<footer class="footer" v-show="books.length">
+				<span class="book-count">
 					<strong v-text="remaining"></strong> {{pluralize('item', remaining)}} left
 				</span>
 				<ul class="filters">
@@ -36,13 +36,17 @@
 					<li><a href="#/active" :class="{selected: visibility == 'active'}">Active</a></li>
 					<li><a href="#/completed" :class="{selected: visibility == 'completed'}">Completed</a></li>
 				</ul>
-				<button class="clear-completed" @click="removeCompleted" v-show="todos.length > remaining">
+				<button class="clear-completed" @click="removeCompleted" v-show="books.length > remaining">
 					Clear completed
 				</button>
 			</footer>
 		</section>
-		
-		<script src="node_modules/todomvc-common/base.js"></script>
+		<footer class="info">
+			<p>Double-click to edit a book</p>
+			<p>Written by <a href="http://evanyou.me">Evan You</a></p>
+			<p>Part of <a href="http://bookmvc.com">bookMVC</a></p>
+		</footer>
+		<script src="node_modules/bookmvc-common/base.js"></script>
 		<script src="node_modules/director/build/director.js"></script>
 		<script src="node_modules/vue/dist/vue.js"></script>
 		<script src="js/store.js"></script>
